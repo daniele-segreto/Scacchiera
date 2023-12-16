@@ -1,0 +1,94 @@
+// Creo un array di 64 campi e setto tutti i valori a false
+var arrayScacchiera = [];
+for (let i = 0; i <= 63; i++) {
+    arrayScacchiera[i] = false;
+}
+
+// Creo la posizione casuale per la pedina del giocatore
+var min = 0;
+var max = 63;
+var giocatore = Math.floor(Math.random() * (max -min + 1) + min);
+
+var pedineCasuali;
+var i = 0;
+
+// Affinchè questa condizione è vera
+while (i <= 7) {
+    // Genero un numero casuale
+    pedineCasuali = Math.floor(Math.random() * (max -min + 1) + min);
+    // Controllo la presenza della pedina all'inteno dell'array (se è false...)
+    if(arrayScacchiera[pedineCasuali] == false) {
+        arrayScacchiera[pedineCasuali] = true; // lo modifico in true
+        i++; // e incremento
+    }
+    
+}
+
+// Do un movimento di 2 caselle
+var movimento_up = giocatore +16;
+var movimento_down = giocatore -16;
+
+// Controllo movimento sù
+function upControl() {
+    // Se il movimento corrisponde a un numero maggiore di 63
+    if (movimento_up > 63) {
+        alert('Non puoi andare in alto'); // mostra un messaggio di errore
+        var divErrore = document.getElementById("errore");
+        divErrore.classList.remove("invisibile");
+        divErrore.classList.add("visibile");
+
+        // altrimenti
+    } else {
+        arrayScacchiera[giocatore] = false; // aggiorna lo stato del giocatore a false
+        giocatore = movimento_up; // aggiorna la posizione del giocatore a +16
+        arrayScacchiera[giocatore] = true; // ri-aggiorna lo stato del giocatore a true
+        divErrore.classList.remove("visibile");
+        divErrore.classList.add("invisibile");
+    }
+}
+// upControl();
+
+// Controllo movimento giù
+function downControl() {
+    // Se il movimento corrisponde a un numero minore di 0
+    if (movimento_down < 0) {
+        alert('Non puoi andare in basso'); // mostra un messaggio di errore
+        // altrimenti
+    } else {
+        arrayScacchiera[giocatore] = false; // aggiorna lo stato del giocatore a false
+        giocatore = movimento_down; // aggiorna la posizione del giocatore a -16
+        arrayScacchiera[giocatore] = true; // ri-aggiorna lo stato del giocatore a true
+    }
+}
+// downControl();
+
+var movimento_left = giocatore - 2;
+var movimento_right = giocatore + 2;
+
+// Controllo movimento a sinistra
+function leftControl() {
+    // Se la posizione del giocatore è 0 o 1 o multiplo di 8 o multiplo di 8 + 1 (prima e seconda colonna a sinistra)
+    if ((giocatore == 1 || giocatore == 0) || (giocatore%8 == 0 || (giocatore-1)%8 == 0)) {
+        alert('Non puoi muoverti a sinistra');
+    } else {
+        // altrimenti
+        arrayScacchiera[giocatore] = false; // aggiorna lo stato del giocatore a false
+        giocatore = movimento_left; // aggiorna la posizione del giocatore a -2
+        arrayScacchiera[giocatore] = true; // ri-aggiorna lo stato del giocatore a true
+    }
+}
+// leftControl();
+
+// Controllo movimento a destra
+function rightControl() {
+    // Se è multiplo di 8 - 2 o multiplo di 8 - 1 (prima e seconda colonna a destra)
+    if ((giocatore+1)%8 == 0 || (giocatore+2)%8 == 0) {
+        alert('Non puoi muoverti a destra');
+    } else {
+        // altrimeti
+        arrayScacchiera[giocatore] = false; // aggiorna lo stato del giocatore a false
+        giocatore = movimento_right; // aggiorna la posizione del giocatore a -2
+        arrayScacchiera[giocatore] = true; // ri-aggiorna lo stato del giocatore a true
+    }
+}
+// rightControl();
